@@ -23,4 +23,20 @@ var longestCommonPrefix = function (strs) {
   }
   return commonStr;
 };
+//换一种思路，其实可以比较每一位是不是相等，当前位都相等再进行字符串的拼接，不相等则直接返回
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function (strs) {
+  if (strs.length === 1 || strs[0] === "") return strs[0];
+  let commonStr = "";
+  for (let i = 0; i < strs[0].length; i++) {
+    for (let j = 1; j < strs.length; j++) {
+      if (strs[j][i] !== strs[0][i]) return commonStr;
+    }
+    commonStr += strs[0][i];
+  }
+  return commonStr;
+};
 longestCommonPrefix(["flower", "flower", "flower", "flower"]);
