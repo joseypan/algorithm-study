@@ -5,7 +5,7 @@
  *     this.next = (next===undefined ? null : next)
  * }
  */
-const getVal = (linkList, array) => {
+/* const getVal = (linkList, array) => {
   console.log(array, linkList);
   let list = [...array];
   let curNode = linkList;
@@ -16,13 +16,13 @@ const getVal = (linkList, array) => {
   }
   list.push(curNode.val);
   return list;
-};
+}; */
 /**
  * @param {ListNode} list1
  * @param {ListNode} list2
  * @return {ListNode}
  */
-var mergeTwoLists = function (list1, list2) {
+/* var mergeTwoLists = function (list1, list2) {
   //分别遍历list1和list2获取到所有的val进行排序再重新组成链表结构
   const list = [];
   //list = getVal(list1,list);
@@ -51,4 +51,33 @@ var mergeTwoLists = function (list1, list2) {
   }
   curNode.val = array[index];
   return list1;
+}; */
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} list1
+ * @param {ListNode} list2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (list1, list2) {
+  //是否可以引入冒泡排序的思想？
+  const prehead = new ListNode(-1);
+  let prev = prehead;
+  while (list1 !== null && list2 !== null) {
+    if (list1.val <= list2.val) {
+      prev.next = list1;
+      list1 = list1.next;
+    } else {
+      prev.next = list2;
+      list2 = list2.next;
+    }
+    prev = prev.next;
+  }
+  prev.next = list1 === null ? list2 : list1;
+  return prehead.next;
 };
