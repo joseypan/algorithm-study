@@ -29,20 +29,32 @@
 // 那是否可以认为只要an-2 的所有种情况都结尾+2都能补充成为Sn多于Sn-1的情况
 // 故得出公式Sn = Sn-1+Sn-2
 // 这个时候场景就变成斐波那契额数列了
-const map = new Map();
-/**
- * @param {number} n
- * @return {number}
- */
+// const map = new Map();
+// /**
+//  * @param {number} n
+//  * @return {number}
+//  */
+// var climbStairs = function (n) {
+//   if (n === 1) return 1;
+//   if (n === 2) return 2;
+//   if (map.get(n)) return map.get(n);
+//   let Sni = climbStairs(n - 1);
+//   map.set(n - 1, Sni);
+//   let Snii = climbStairs(n - 2);
+//   map.set(n - 2, Snii);
+//   return Sni + Snii;
+// };
 var climbStairs = function (n) {
   if (n === 1) return 1;
   if (n === 2) return 2;
-  if (map.get(n)) return map.get(n);
-  let Sni = climbStairs(n - 1);
-  map.set(n - 1, Sni);
-  let Snii = climbStairs(n - 2);
-  map.set(n - 2, Snii);
-  return Sni + Snii;
+  let firstCount = 1;
+  let secondCount = 2;
+  for (let i = 3; i <= n; i++) {
+    let sum = firstCount + secondCount;
+    firstCount = secondCount;
+    secondCount = sum;
+  }
+  return secondCount;
 };
 let result = climbStairs(45);
 console.log("result", result);
