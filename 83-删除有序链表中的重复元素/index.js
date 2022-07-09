@@ -12,8 +12,14 @@ let head = {
   next: {
     val: 1,
     next: {
-      val: 1,
-      next: null,
+      val: 2,
+      next: {
+        val: 3,
+        next: {
+          val: 3,
+          next: null,
+        },
+      },
     },
   },
 };
@@ -34,20 +40,22 @@ function ListNode(val, next) {
  * @return {ListNode}
  */
 var deleteDuplicates = function (head) {
-  const newNodeList = new ListNode(-1);
+  if (head === null) return head;
   let currentNode = head;
-  let newNodeLastNode = newNodeList;
+  let lastNode = head;
   while (currentNode.next !== null) {
-    if (currentNode.val !== newNodeLastNode.val) {
-      let newNode = ListNode(currentNode.val);
-      newNodeLastNode.next = newNode;
-      newNodeLastNode = newNodeLastNode.next;
+    if (currentNode.val !== lastNode.val) {
+      lastNode.next = currentNode;
+      lastNode = lastNode.next;
     }
     currentNode = currentNode.next;
   }
-  if (currentNode.val !== newNodeLastNode.val) {
-    newNodeLastNode.next = ListNode(currentNode.val);
+  if (currentNode.val === lastNode.val) {
+    lastNode.next = null;
+  } else {
+    lastNode.next = currentNode;
   }
-  return newNodeList;
+  return head;
 };
-deleteDuplicates(head);
+let result = deleteDuplicates(head);
+console.log("result", result);
