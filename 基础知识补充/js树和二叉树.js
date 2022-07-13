@@ -113,15 +113,86 @@
 let root = {
   val: 1,
   left: null,
-  right: { val: 2, left: { val: 3, left: null, right: null }, right: null },
+  right: {
+    val: 2,
+    left: {
+      val: 3,
+      left: null,
+      right: null,
+    },
+    right: null,
+  },
 };
 let list = [];
 const preOrder = (root) => {
-  list.push(root.val);
-  if (root.left) preOrder(root.left);
-  if (root.right) preOrder(root.right);
+  if (root) {
+    list.push(root.val);
+    if (root.left) preOrder(root.left);
+    if (root.right) preOrder(root.right);
+  }
 };
 preOrder(root);
 console.log("list", list);
+// 非递归版本
+let list1 = [];
+const preOrderV2 = (root) => {
+  const stack = [];
+  let currentNode = root;
+  while (currentNode || stack.length > 0) {
+    while (currentNode) {
+      list1.push(currentNode.val);
+      stack.push(currentNode);
+      currentNode = currentNode.left;
+    }
+    currentNode = stack.pop();
+    currentNode = currentNode.right;
+  }
+};
+preOrderV2(root);
+console.log("list1", list1);
+// 自己尝试实现这段逻辑
+let list2 = [];
+const preOrderByCustom = (root) => {
+  const stack = [];
+  stack.push(root);
+  while (stack.length > 0) {
+    let currentNode = stack.shift();
+    list2.push(currentNode.val);
+    if (currentNode.right) stack.unshift(currentNode.right);
+    if (currentNode.left) stack.unshift(currentNode.left);
+  }
+};
+preOrderByCustom(root);
+console.log("list2", list2);
 // 2、中序遍历
+// 给定一个二叉树，返回它的中序遍历
+// 疑问：什么是迭代算法
+const list3 = [];
+const inOrder = (root) => {
+  if (root) {
+    inOrder(root.left);
+    list3.push(root.val);
+    inOrder(root.right);
+  }
+};
+inOrder(root);
+console.log("list3", list3);
+//考虑非递归完成中序遍历
+const list4 = [];
+const inOrderByCustom = (root) => {
+  const stack = [];
+  stack.push(root);
+  while (stack.length > 0) {
+    let currentNode = stack.shift();
+    if (currentNode.right) {
+      stack.unshift(currentNode.right);
+    }
+    list4.push(currentNode.val);
+    if (currentNode.left) {
+      stack.unshift(currentNode.left);
+    }
+  }
+};
+inOrderByCustom(root);
+console.log("list4", list4);
 // 3、后序遍历
