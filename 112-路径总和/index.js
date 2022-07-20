@@ -24,6 +24,28 @@ var hasPathSum = function (root, targetSum) {
   }
   return false;
 };
+const hasPathSum2 = (root, targetSum) => {
+  const stack = [];
+  let currentNode = root;
+  let sum = targetSum;
+  while (currentNode || stack.length > 0) {
+    while (currentNode) {
+      sum = sum - currentNode.val;
+      console.log("sum_remove", currentNode, currentNode.val, sum);
+      if (sum === 0 && !currentNode.left && !currentNode.right) return true;
+      stack.push(currentNode);
+      currentNode = currentNode.left;
+    }
+    currentNode = stack.pop();
+    console.log("currentNode", currentNode.val);
+    let extralNum = 0;
+    if (currentNode.left) extralNum = currentNode.left.val;
+    sum += extralNum;
+    console.log("sum_plus", sum);
+    currentNode = currentNode.right;
+  }
+  return false;
+};
 const root = {
   val: 5,
   left: {
@@ -61,5 +83,34 @@ const root = {
     },
   },
 };
-let result = hasPathSum(root, 22);
+const root1 = {
+  val: 1,
+  left: {
+    val: -2,
+    left: {
+      val: 1,
+      left: {
+        val: -1,
+        left: null,
+        right: null,
+      },
+      right: null,
+    },
+    right: {
+      val: 3,
+      left: null,
+      right: null,
+    },
+  },
+  right: {
+    val: -3,
+    left: {
+      val: -2,
+      left: null,
+      right: null,
+    },
+    right: null,
+  },
+};
+let result = hasPathSum2(root1, -4);
 console.log("result", result);
