@@ -1,7 +1,11 @@
 // 【分析】
 // 1、要判断是否为平衡二叉树，就要根据平衡二叉树的定义去判定
+// 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
 // 2、自己的思路首先想到的是通过广度优先先去遍历二叉树
 // 3、若是左孩子或者右孩子的结点为null则开始计数层级，判断层级差是否大于1，若大于1直接return false
+// 回归到最根本的定义，什么是节点的高度？
+// 高度：对于任意节点n,n的高度从n到一片叶子的最长路径长，所有树叶的高度为0
+// 所有仅当左右孩子均为null的时候才能被认为是叶子结点，当前叶子结点才可以计数
 /**
  * Definition for a binary tree node.
  * function TreeNode(val, left, right) {
@@ -25,12 +29,8 @@ var isBalanced = function (root) {
     let length = stack.length;
     while (length > 0) {
       let currentNode = stack.shift();
-      if (!currentNode.left && !currentNode.right) {
+      if (!currentNode.left || !currentNode.right) {
         minLength = isFirst ? maxLength + 1 : minLength;
-        isFirst = false;
-      }
-      if (!currentNode.left || !currentNode.righ) {
-        minLength = isFirst ? maxLength + 2 : minLength;
         isFirst = false;
       }
       if (currentNode.left) {
@@ -67,63 +67,63 @@ var isBalanced = function (root) {
 //     },
 //   },
 // };
-const root = {
-  val: 1,
-  left: {
-    val: 2,
-    left: {
-      val: 3,
-      left: {
-        val: 4,
-        left: null,
-        right: null,
-      },
-      right: {
-        val: 4,
-        left: null,
-        right: null,
-      },
-    },
-    right: {
-      val: 3,
-      left: null,
-      right: null,
-    },
-  },
-  right: {
-    val: 2,
-    left: null,
-    right: null,
-  },
-};
 // const root = {
 //   val: 1,
 //   left: {
 //     val: 2,
 //     left: {
-//       val: 4,
+//       val: 3,
 //       left: {
-//         val: 8,
+//         val: 4,
 //         left: null,
 //         right: null,
 //       },
-//       right: null,
+//       right: {
+//         val: 4,
+//         left: null,
+//         right: null,
+//       },
 //     },
 //     right: {
-//       val: 5,
+//       val: 3,
 //       left: null,
 //       right: null,
 //     },
 //   },
 //   right: {
-//     val: 3,
-//     left: {
-//       val: 6,
-//       right: null,
-//       left: null,
-//     },
+//     val: 2,
+//     left: null,
 //     right: null,
 //   },
 // };
+const root = {
+  val: 1,
+  left: {
+    val: 2,
+    left: {
+      val: 4,
+      left: {
+        val: 8,
+        left: null,
+        right: null,
+      },
+      right: null,
+    },
+    right: {
+      val: 5,
+      left: null,
+      right: null,
+    },
+  },
+  right: {
+    val: 3,
+    left: {
+      val: 6,
+      right: null,
+      left: null,
+    },
+    right: null,
+  },
+};
 let result = isBalanced(root);
 console.log("result", result);
