@@ -196,3 +196,38 @@ const inOrderByCustom = (root) => {
 inOrderByCustom(root);
 console.log("list4", list4);
 // 3、后序遍历
+// 递归版本
+const list5 = [];
+const postOrder = (root) => {
+  if (root) {
+    postOrder(root.left);
+    postOrder(root.right);
+    list5.push(root.val);
+  }
+};
+postOrder(root);
+console.log("list5", list5);
+// 非递归版
+const list6 = [];
+const postOrder2 = (root) => {
+  const stack = [];
+  let currentNode = root;
+  let lastNode = null;
+  while (currentNode || stack.length > 0) {
+    while (currentNode) {
+      stack.push(currentNode);
+      currentNode = currentNode.left;
+    }
+    currentNode = stack[stack.length - 1];
+    if (!currentNode.right || currentNode.right === lastNode) {
+      currentNode = stack.pop();
+      list6.push(currentNode.val);
+      lastNode = currentNode;
+      currentNode = null;
+    } else {
+      currentNode = currentNode.right;
+    }
+  }
+};
+postOrder2(root);
+console.log("list6", list6);
