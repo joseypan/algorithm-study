@@ -12,6 +12,12 @@ var convertToTitle = function (columnNumber) {
   let str = "";
   let times = 0;
   let computedNum = columnNumber;
+  while (columnNumber >= Math.pow(26, times)) {
+    // 计算取余的数，然后根据取余的数去map中查找对应的字母
+    let count = columnNumber % (26 * Math.pow(10, times));
+    console.log("count", count, columnNumber, Math.pow(10, times));
+    times++;
+  }
 };
 
 const getChartMap = () => {
@@ -44,3 +50,4 @@ const getChartMap = () => {
   map.set(26, "Z");
   return map;
 };
+convertToTitle(28);
