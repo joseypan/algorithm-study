@@ -28,3 +28,16 @@
 // ...给我的感觉看来，回溯算法就像是穷举法
 // 把每一条路都走一遍，当发现不对的时候再返回去走另外一条路
 // 先做题感受吧
+// 看了代码随想录关于回溯算法的总结，整体思路是递归的思路，但是递归过后要重置
+// 貌似其大致思路是这样的
+const backtracking = (n, k, startIndex) => {
+  if (终止条件) {
+    result.push(path);
+    return;
+  }
+  for (let i = startIndex; i <= n; i++) {
+    path.push(i);
+    backtracking(n, k, startIndex + 1);
+    path.pop();
+  }
+};
