@@ -9,14 +9,15 @@ var combine = function (n, k) {
   backtracking(n, k, 1, result, path);
   return result;
 };
+// n表示是从1-n这么大的数，k表示这个组合数组的长度为多少
 const backtracking = (n, k, startIndex, result, path) => {
   if (path.length === k) {
-    result.push(path);
+    result.push([...path]);
     return;
   }
   for (let i = startIndex; i <= n; i++) {
     path.push(i);
-    backtracking(n, k, startIndex + 1, result, path);
+    backtracking(n, k, i + 1, result, path);
     path.pop();
   }
 };
