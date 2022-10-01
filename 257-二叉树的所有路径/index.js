@@ -32,3 +32,6 @@ var binaryTreePaths = function (root, list = []) {
   const rightList = binaryTreePaths(root.right, currentPathList);
   return [...leftList, ...rightList];
 };
+
+// 现在需要思考如何以非递归的方式把这道题写出来呢?
+
