@@ -107,3 +107,43 @@ const result = postorderTraversal({
   right: { val: 2, left: null, right: null },
 });
 console.log("result", result);
+// 二叉树的统一迭代法
+const inorderTraversal2 = (root) => {
+  if (root === null) return [];
+  const result = [];
+  const stack = [];
+  if (root !== null) stack.push(root);
+  while (stack.length) {
+    let curNode = stack[stack.length - 1];
+    if (curNode !== null) {
+      stack.pop();
+      if (curNode.right) stack.push(curNode.right);
+      stack.push(curNode);
+      stack.push(null);
+      if (curNode.left) stack.push(curNode.left);
+    } else {
+      stack.pop(); //弹出空节点
+      curNode = stack.pop();
+      result.push(node.val);
+    }
+  }
+  return result;
+};
+var preorderTraversal2 = function (root) {
+  if (!root) return [];
+  const result = [];
+  const stack = [];
+  stack.push(root);
+  while (stack.length) {
+    let curNode = stack.pop();
+    if (!curNode) {
+      result.push(stack.pop().val);
+      continue;
+    }
+    if (curNode.right) stack.push(curNode.right);
+    if (curNode.left) stack.push(curNode.left);
+    stack.push(curNode);
+    stack.push(null);
+  }
+  return result;
+};
