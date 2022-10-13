@@ -147,3 +147,28 @@ var preorderTraversal2 = function (root) {
   }
   return result;
 };
+// 二叉树的层序遍历，了解完这个就可以开始写二叉树的算法题了
+// 其实要做到广度优先遍历，我们遇到的难点在于如何获取当前层级，其实我们可以用一个数组收集呀！
+const levelOrder = (root) => {
+  // 和之前一样，先进行根元素判断，若根元素是null则直接返回空数组
+  if (!root) return [];
+  // 和之前不同的是这里的思想是队列，我们就暂且取名queue吧，不过在js中都是用数组模拟
+  const result = [];
+  const queue = [];
+  queue.push(root);
+  while (queue.length) {
+    //我们需要知道当前层级有多少个，只用看当前queue中的长度，然后用个数组来收集这一层中所有的元素
+    const levelCount = queue.length;
+    const curLevel = [];
+    for (let i = 0; i < levelCount; i++) {
+      //从前面取出来，放到当前层级中去
+      const node = queue.shift();
+      curLevel.push(node.val);
+      //将左节点加入到队列中，方便下一层级的遍历
+      node.left && queue.push(node.left);
+      node.right && queue.push(node.right);
+    }
+    result.push(curLevel);
+  }
+  return result;
+};
