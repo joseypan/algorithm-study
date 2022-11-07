@@ -18,17 +18,14 @@ var combinationSum2 = function (candidates, target) {
     //终止条件 totalCount > target -> return totalCount === target -> 收集+return
     if (totalCount > target) return;
     if (totalCount === target) {
-      const item = path.sort((a, b) => {
-        return a - b;
-      });
-      if (!map.has(item.join())) {
-        //说明已经收集过了
-        result.push([...item]);
-        map.set(item.join(), item);
-      }
+      //说明已经收集过了
+      result.push([...path]);
       return;
     }
     for (let i = startIndex; i < candidates.length; i++) {
+      if (i > startIndex && candidates[i] === candidates[i - 1]) {
+        continue;
+      }
       path.push(candidates[i]);
       totalCount += candidates[i];
       backtraking(i + 1);
@@ -36,9 +33,10 @@ var combinationSum2 = function (candidates, target) {
       totalCount -= candidates[i];
     }
   };
+  candidates.sort((a, b) => a - b);
   backtraking(0);
   return result;
 };
 
-const result = combinationSum2([10, 1, 2, 7, 6, 1, 5], 8);
+const result = combinationSum2([2, 5, 2, 1, 2], 5);
 console.log("result", result);
