@@ -15,25 +15,54 @@ map.set(9, ["w", "x", "y", "z"]);
  * @param {string} digits
  * @return {string[]}
  */
+// var letterCombinations = function (digits) {
+//   const firstNumber = digits.slice(0, 1);
+//   const restNumber = digits.slice(1);
+//   let list = [];
+//   if (map.has(Number(firstNumber))) {
+//     const letterList = map.get(Number(firstNumber));
+//     for (let i = 0; i < letterList.length; i++) {
+//       if (restNumber) {
+//         const restList = letterCombinations(restNumber);
+//         restList.forEach((ele) => {
+//           let str = `${letterList[i]}${ele}`;
+//           list.push(str);
+//         });
+//       } else {
+//         list.push(letterList[i]);
+//       }
+//     }
+//   }
+//   return list;
+// };
 var letterCombinations = function (digits) {
-  const firstNumber = digits.slice(0, 1);
-  const restNumber = digits.slice(1);
-  let list = [];
-  if (map.has(Number(firstNumber))) {
-    const letterList = map.get(Number(firstNumber));
-    for (let i = 0; i < letterList.length; i++) {
-      if (restNumber) {
-        const restList = letterCombinations(restNumber);
-        restList.forEach((ele) => {
-          let str = `${letterList[i]}${ele}`;
-          list.push(str);
-        });
-      } else {
-        list.push(letterList[i]);
-      }
+  if (digits.length === 0) return [];
+  const result = [];
+  const path = [];
+  const letterMap = new Map([
+    ["2", ["a", "b", "c"]],
+    ["3", ["d", "e", "f"]],
+    ["4", ["g", "h", "i"]],
+    ["5", ["j", "k", "l"]],
+    ["6", ["m", "n", "o"]],
+    ["7", ["p", "q", "r", "s"]],
+    ["8", ["t", "u", "v"]],
+    ["9", ["w", "x", "y", "z"]],
+  ]);
+  const backtracking = (index) => {
+    if (path.length === digits.length) {
+      result.push(path.join(""));
+      return;
     }
-  }
-  return list;
+    const letterList = letterMap.get(digits[index]);
+    for (let i = 0; i < letterList.length; i++) {
+      path.push(letterList[i]);
+      backtracking(index + 1);
+      path.pop();
+    }
+  };
+  backtracking(0);
+  return result;
 };
 
 let result = letterCombinations("23");
