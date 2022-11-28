@@ -5,10 +5,26 @@
  * @param {number} num
  * @return {boolean}
  */
+// var isPerfectSquare = function (num) {
+//   let count = 1;
+//   while (count * count < num) {
+//     count++;
+//   }
+//   return count * count === num;
+// };
 var isPerfectSquare = function (num) {
-  let count = 1;
-  while (count * count < num) {
-    count++;
+  let left = 0;
+  let right = num;
+  while (left <= right) {
+    const middle = Math.floor((right - left) / 2 + left);
+    const count = middle * middle;
+    if (count < num) {
+      left = middle + 1;
+    } else if (count > num) {
+      right = middle - 1;
+    } else {
+      return true;
+    }
   }
-  return count * count === num;
+  return false;
 };
