@@ -20,3 +20,14 @@ var intersection = function (nums1, nums2) {
 };
 const result = intersection([1, 2, 2, 1], [2, 2]);
 console.log("result", result);
+
+var intersection = function (nums1, nums2) {
+  const maxList = nums1.length > nums2.length ? nums1 : nums2;
+  const minList = nums1.length > nums2.length ? nums2 : nums1;
+  const rawSet = new Set(maxList);
+  const set = new Set();
+  for (const i of minList) {
+    rawSet.has(i) && set.add(i);
+  }
+  return Array.from(set);
+};
