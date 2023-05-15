@@ -14,3 +14,16 @@ var twoSum = function (nums, target) {
     }
   }
 };
+
+var twoSum = function (nums, target) {
+  const map = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    const dis = target - nums[i];
+    if (map.has(dis)) {
+      return [map.get(dis), i];
+    } else {
+      map.set(nums[i], i);
+    }
+  }
+  return [];
+};
