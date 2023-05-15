@@ -33,3 +33,76 @@ function setItemCount(map, key, type) {
 let s = "anagram",
   t = "nagaram";
 isAnagram(s, t);
+
+// var isAnagram = function (s, t) {
+//   const map = new Map();
+//   for (let i = 0; i < s.length; i++) {
+//     let count = 0;
+//     if (map.has(s[i])) {
+//       count = map.get(s[i]);
+//     }
+//     map.set(s[i], count + 1);
+//   }
+//   for (let i = 0; i < t.length; i++) {
+//     if (map.has(t[i])) {
+//       count = map.get(t[i]);
+//       if (count - 1 === 0) {
+//         // 说明这个元素可以删除了
+//         map.delete(t[i]);
+//       } else {
+//         map.set(t[i], count - 1);
+//       }
+//     } else {
+//       // 出现了s中没有的字符，直接返回false
+//       return false;
+//     }
+//   }
+//   return map.size === 0 ? true : false;
+// };
+// var isAnagram = function (s, t) {
+//   if (s.length !== t.length) return false;
+//   const map = new Map();
+//   let index = 0;
+//   while (index < s.length) {
+//     // 主要思路是s的字符用来存值，t的字符用来取值
+//     if (map.has(s[index])) {
+//       // 存在则存值
+//       const count = map.get(s[index]);
+//       if (count + 1 === 0) {
+//         map.delete(s[index]);
+//       } else {
+//         map.set(s[index], count + 1);
+//       }
+//     } else {
+//       map.set(s[index], 1);
+//     }
+//     if (map.has(t[index])) {
+//       const count = map.get(t[index]);
+//       if (count - 1 === 0) {
+//         map.delete(t[index]);
+//       } else {
+//         map.set(t[index], count - 1);
+//       }
+//     } else {
+//       map.set(t[index], -1);
+//     }
+//     index++;
+//   }
+//   return map.size === 0;
+// };
+
+// 重点就是一加一减去抵消
+
+var isAnagram = function (s, t) {
+  if (s.length !== t.length) return false;
+  const base = "a".charCodeAt();
+  const resSet = new Array(26).fill(0);
+  for (const i of s) {
+    resSet[i.charCodeAt() - base]++;
+  }
+  for (const i of t) {
+    if (!resSet[i.charCodeAt() - base]) return false;
+    resSet[i.charCodeAt() - base]--;
+  }
+  return true;
+};
